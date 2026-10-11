@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Fast DDS profile for the control PC (multi-homed: arms, cameras, lab net).
+
+Restricts ROS 2 / Fast DDS to loopback + the 10G camera link. Without this,
+the participant announces every interface (incl. docker0 172.17.0.1, which
+also exists on the Jetson) as candidate data locators; that poisons locator
+selection on the Jetson writers and silently blackholes all user data while
+discovery keeps working (topics visible, `ros2 topic hz` stale).
+
+Counterpart on the Jetson: /home/toelle/fastdds_jetson.xml (whitelists
+127.0.0.1 + 192.168.10.212, initial peer 192.168.10.100).
+
+If another ROS 2 machine joins the system, add the PC interface facing it to
+the interfaceWhiteList and the machine's IP to the initialPeersList.
+-->
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+
+    <transport_descriptors>
+        <transport_descriptor>
+            <transport_id>udp_transport</transport_id>
+            <type>UDPv4</type>
+            <interfaceWhiteList>
+                <address>127.0.0.1</address>
+                <address>192.168.10.100</address>
+            </interfaceWhiteList>
+            <sendBufferSize>134217728</sendBufferSize>
+            <receiveBufferSize>134217728</receiveBufferSize>
+        </transport_descriptor>
+    </transport_descriptors>
+
+    <participant profile_name="pc_participant" is_default_profile="true">
+        <rtps>
+            <userTransports>
+                <transport_id>udp_transport</transport_id>
+            </userTransports>
+            <useBuiltinTransports>false</useBuiltinTransports>
+            <builtin>
+                <initialPeersList>
+                    <locator>
+                        <udpv4>
+                            <address>192.168.10.212</address>
+                        </udpv4>
+                    </locator>
+                    <locator>
+                        <udpv4>
+                            <address>127.0.0.1</address>
+                        </udpv4>
+                    </locator>
+                </initialPeersList>
+            </builtin>
+        </rtps>
+    </participant>
+</profiles>

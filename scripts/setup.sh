@@ -47,12 +47,12 @@ if [ ! -d "franka_ros2" ]; then
     rm -rf ./franka_ros2/libfranka ./franka_ros2/franka_robot_state_broadcaster
     
     cd ./franka_ros2/ 
-    git clone --recurse-submodules https://git.ias.informatik.tu-darmstadt.de/ros2/franka/libfranka.git
-    git clone https://git.ias.informatik.tu-darmstadt.de/ros2/franka/franka_robot_state_broadcaster.git
+    git clone --recurse-submodules git@git.ias.informatik.tu-darmstadt.de:ros2/franka/libfranka.git
+    git clone git@git.ias.informatik.tu-darmstadt.de:ros2/franka/franka_robot_state_broadcaster.git
     cd ..
     
     vcs import ./franka_ros2 < ./franka_ros2/dependency.repos --recursive --skip-existing
-    rosdep install --from-paths ./franka_ros2 --ignore-src --rosdistro "$ROS_DISTRO" --skip-keys "ignition-plugin franka_ign_ros2_control" -y
+    # rosdep install --from-paths ./franka_ros2 --ignore-src --rosdistro "$ROS_DISTRO" --skip-keys "ignition-plugin franka_ign_ros2_control" -y
 else
     echo "franka_ros2 already exists, pulling changes for sub-repos..."
     cd franka_ros2
@@ -70,15 +70,23 @@ sync_repo "https://github.com/ROBOTIS-GIT/DynamixelSDK.git" "DynamixelSDK" "$ROS
 sync_repo "https://github.com/ROBOTIS-GIT/dynamixel_interfaces.git" "dynamixel_interfaces" "$ROS_DISTRO"
 
 # 4. CRISP Py & Gym
-sync_repo "git@github.com:DFKI-SAIROL/crisp_py.git" "crisp_py"
-sync_repo "git@github.com:DFKI-SAIROL/crisp_gym.git" "crisp_gym"
-
+#sync_repo "git@github.com:DFKI-SAIROL/crisp_py.git" "crisp_py"
+#sync_repo "git@github.com:DFKI-SAIROL/crisp_gym.git" "crisp_gym"
+sync_repo "https://github.com/DFKI-SAIROL/crisp_py.git" "crisp_py"
+sync_repo "https://github.com/DFKI-SAIROL/crisp_gym.git" "crisp_gym"
 # 5. Misc
+
 # TODO: change to the default branch once merged
-sync_repo "https://git.ias.informatik.tu-darmstadt.de/ros2/franka/frankapy" "franka_py" "feature/crisp"
-sync_repo "git@github.com:DFKI-SAIROL/robot_ik_layer.git" "robot_ik_layer"
-sync_repo "git@github.com:DFKI-SAIROL/robot_safety_layer.git" "robot_safety_layer"
-sync_repo "git@github.com:DFKI-SAIROL/franka_robot_description.git" "franka_robot_description"
+sync_repo "git@git.ias.informatik.tu-darmstadt.de:ros2/franka/frankapy" "franka_py" "feature/crisp"  
+
+# sync_repo "git@github.com:DFKI-SAIROL/robot_ik_layer.git" "robot_ik_layer"
+sync_repo "https://github.com/DFKI-SAIROL/robot_ik_layer.git" "robot_ik_layer"
+
+sync_repo "https://github.com/DFKI-SAIROL/robot_safety_layer.git" "robot_safety_layer"
+# sync_repo "git@github.com:DFKI-SAIROL/robot_safety_layer.git" "robot_safety_layer"
+
+# sync_repo "git@github.com:DFKI-SAIROL/franka_robot_description.git" "franka_robot_description"
+sync_repo "https://github.com/DFKI-SAIROL/franka_robot_description.git" "franka_robot_description"
 
 # System tools
 if ! command -v scrcpy &> /dev/null || [ "$(scrcpy --version | head -n 1 | grep -o '1\.')" = "1." ]; then

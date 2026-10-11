@@ -36,6 +36,7 @@ build = "colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release 
 clean = "rm -rf build install log"
 clean-build = [{ task = "clean" }, { task = "build" }]
 robot = "bash scripts/run_robot.sh"
+cameras = "python scripts/view_wrist_cameras.py"
 teleop = "bash scripts/run_teleop.sh"
 client = "bash scripts/run_client.sh"
 data-collection = "bash scripts/run_data_collection.sh"

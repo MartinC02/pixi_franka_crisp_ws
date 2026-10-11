@@ -1,0 +1,7 @@
+README.md
+pyproject.toml
+frankapy.egg-info/PKG-INFO
+frankapy.egg-info/SOURCES.txt
+frankapy.egg-info/dependency_links.txt
+frankapy.egg-info/requires.txt
+frankapy.egg-info/top_level.txt

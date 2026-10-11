@@ -8,3 +8,7 @@ build
 src
 scripts/launch/__pycache__
 pixi.lock
+
+# pixi environments
+.pixi/*
+!.pixi/config.toml

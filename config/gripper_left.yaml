@@ -1,0 +1,3 @@
+joint_state_topic: franka_gripper/joint_states
+max_value: 0.0
+min_value: 1.1320778214596032
