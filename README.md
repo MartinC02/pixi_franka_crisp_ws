@@ -38,6 +38,14 @@ pixi run setup
 > [!NOTE]
 > This command will automatically create the `.pixi` environment, clone repositories into `src/`, apply custom patches, and install dependencies via `rosdep` and `snap` (for `scrcpy`).
 
+> [!IMPORTANT]
+> The exact `src/` that runs on the DFKI bimanual rig is in the private repo
+> [`MartinC02/franka_ws_src`](https://github.com/MartinC02/franka_ws_src). It contains every package at the
+> commit actually used, with all local changes (safety/IK layer, URDFs, data
+> collection, `franka_policy`) and the Jetson camera launch files. To reproduce
+> the rig, clone it into `src/` instead of cloning the upstream repos:
+> `git clone martin_github:MartinC02/franka_ws_src.git src`
+
 ### 1.2.2. Build the Workspace
 Compile all C++ and Python packages:
 ```bash

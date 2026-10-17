@@ -27,7 +27,7 @@ tmux new-session -d -s $SESSION "pixi run -e humble ros2 launch franka_launch ex
 tmux split-window -h -t $SESSION "env -i HOME=$HOME USER=$USER /usr/bin/ssh -t jetson 'cd Projects/ros2_ws && source install/setup.bash && export ROS_DOMAIN_ID=$ROS_DOMAIN_ID && bash launch_zed.sh bimanual' ; exec bash" # choose config csil|max|"custom"
 tmux split-window -v -t $SESSION "pixi run -e humble ros2 launch zed_rig_aggregator_node aggregator.launch.py ; exec bash"
 tmux split-window -v -t $SESSION "pixi run -e humble ros2 launch robot_ik_layer start_ijk.launch.py spawn_franka_left:=true spawn_franka_right:=true bypass_safety:=true ; exec bash"
-# Wrist camera preview (own OpenCV window); give the ZED stack a moment to come up first.
+# Camera preview (own Qt window; L = row/column, wheel = zoom); give the ZED stack a moment to come up first.
 # tmux split-window -v -t $SESSION "sleep 5; pixi run -e humble ros2 launch zed_remote_launcher start_zed.launch.py project:=lwk_2"
 tmux split-window -v -t $SESSION "sleep 15 ; pixi run -e humble python scripts/view_wrist_cameras.py ; exec bash"
 tmux select-layout -t $SESSION tiled

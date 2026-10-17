@@ -12,3 +12,7 @@ pixi.lock
 # pixi environments
 .pixi/*
 !.pixi/config.toml
+
+# python build junk
+__pycache__/
+*.pyc
